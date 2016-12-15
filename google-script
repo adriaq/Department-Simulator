@@ -1,0 +1,610 @@
+/***********************************************************************************
+* * Department Simulator Script                                                    *
+* * By Adrià Quesada, November 2016                                                * 
+*                                                                                  *
+* MIT License                                                                      *
+*                                                                                  *
+* Copyright (c) [2016] [Adrià Quesada]                                             *
+*                                                                                  *
+* Permission is hereby granted, free of charge, to any person obtaining a copy     * 
+* of this software and associated documentation files (the "Software"), to deal    *
+* in the Software without restriction, including without limitation the rights     *
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell        *
+* copies of the Software, and to permit persons to whom the Software is            *
+* furnished to do so, subject to the following conditions:                         *
+*                                                                                  *
+* The above copyright notice and this permission notice shall be included in all   *
+* copies or substantial portions of the Software.                                  *
+*                                                                                  *
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR       *
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,         *
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE      *
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER           *
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,    *
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE    *
+* SOFTWARE.                                                                        *
+************************************************************************************/
+
+//init game vars
+function initGame() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet()  
+  if(ss.getSheets()[1].getRange("G25").getValue() == "start"){
+  if(ss.getSheets()[2].getRange("B1").getValue() > 0){
+    var number_of_teams = ss.getSheets()[2].getRange("B1").getValue();
+    print("Number of teams:"+number_of_teams,"Warning");
+    var team_range = ss.getSheets()[0].getRange(5, 2, 1, 16);
+    var range_name_team =  ss.getSheets()[2].getRange("A10");
+    var team_name = "";
+    
+    for(var i = 0;i<10;++i) {
+      var values = [["","","","","","","","","","","","","","","",""]];
+      team_range.offset(i,0,1,16).setValues(values);
+    }
+    for(var i = 0;i<number_of_teams;++i) {
+      team_name = range_name_team.offset(0+i,0,1,1).getValue();
+      print("Adding team: "+team_name,"Warning");
+      var values = [[team_name,"10","20","20","20","10","0","0","0","0","0","0","0","0","0","0"]];
+      team_range.offset(i,0,1,16).setValues(values);
+    }
+    print("All teams added","Ok");
+    //dirty part
+    team_range = ss.getSheets()[0].getRange(5, 2, 1, 16);
+    if(team_range.offset(0,1,1,1).getValue() != "") {
+      team_range.offset(0,1,1,1).setFormula("=SUM(G5:K5)")
+    }
+    if(team_range.offset(1,1,1,1).getValue() != "") {
+      team_range.offset(1,1,1,1).setFormula("=SUM(G6:K6)")
+    } 
+    if(team_range.offset(2,1,1,1).getValue() != "") {
+      team_range.offset(2,1,1,1).setFormula("=SUM(G7:K7)")
+    }
+    if(team_range.offset(3,1,1,1).getValue() != "") {
+      team_range.offset(3,1,1,1).setFormula("=SUM(G8:K8)")
+    }
+    if(team_range.offset(4,1,1,1).getValue() != "") {
+      team_range.offset(4,1,1,1).setFormula("=SUM(G9:K9)")
+    }
+    if(team_range.offset(5,1,1,1).getValue() != "") {
+      team_range.offset(5,1,1,1).setFormula("=SUM(G10:K10)")
+    }
+    if(team_range.offset(6,1,1,1).getValue() != "") {
+      team_range.offset(6,1,1,1).setFormula("=SUM(G11:K11)")
+    } 
+    if(team_range.offset(7,1,1,1).getValue() != "") {
+      team_range.offset(7,1,1,1).setFormula("=SUM(G12:K12)")
+    }
+    if(team_range.offset(8,1,1,1).getValue() != "") {
+      team_range.offset(8,1,1,1).setFormula("=SUM(G13:K13)")
+    }
+    if(team_range.offset(9,1,1,1).getValue() != "") {
+      team_range.offset(9,1,1,1).setFormula("=SUM(G14:K14)")
+    }
+    //impact points formula
+    if(team_range.offset(0,1,1,1).getValue() != "") {
+      team_range.offset(0,15,1,1).setFormula("=SUM(L5:O5)*10+P5")
+    }
+    if(team_range.offset(1,1,1,1).getValue() != "") {
+      team_range.offset(1,15,1,1).setFormula("=SUM(L6:O6)*10+P6")
+    } 
+    if(team_range.offset(2,1,1,1).getValue() != "") {
+      team_range.offset(2,15,1,1).setFormula("=SUM(L7:O7)*10+P7")
+    }
+    if(team_range.offset(3,1,1,1).getValue() != "") {
+      team_range.offset(3,15,1,1).setFormula("=SUM(L8:O8)*10+P8")
+    }
+    if(team_range.offset(4,1,1,1).getValue() != "") {
+      team_range.offset(4,15,1,1).setFormula("=SUM(L9:O9)*10+P9")
+    }
+    if(team_range.offset(5,1,1,1).getValue() != "") {
+      team_range.offset(5,15,1,1).setFormula("=SUM(L10:O10)*10+P10")
+    }
+    if(team_range.offset(6,1,1,1).getValue() != "") {
+      team_range.offset(6,15,1,1).setFormula("=SUM(L11:O11)*10+P11")
+    } 
+    if(team_range.offset(7,1,1,1).getValue() != "") {
+      team_range.offset(7,15,1,1).setFormula("=SUM(L12:O12)*10+P12")
+    }
+    if(team_range.offset(8,1,1,1).getValue() != "") {
+      team_range.offset(8,15,1,1).setFormula("=SUM(L13:O13)*10+P13")
+    }
+    if(team_range.offset(9,1,1,1).getValue() != "") {
+      team_range.offset(9,15,1,1).setFormula("=SUM(L14:O14)*10+P14")
+    }
+  } else print("Num of teams wrong value","Error");  
+  } else print("Cannot init game","Error");
+}
+ 
+
+// Execute the action selected by the team and the action cells in the sc_1 page
+function execute_action(){
+  print("Executing action","OK");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  var option = ss.getSheets()[1].getRange("C6").getValue();
+  var team = ss.getSheets()[1].getRange("B6").getValue();
+  Logger.log("Apply " +option+ " to " +team);
+  if(option == "Hire")                execute_hire(team);  
+  else if(option == "Redistribute")   execute_redistribute(team);
+  else if(option == "Assign")         execute_assign(team);    
+  else if(option == "Lead a Project") execute_lead_project(team)
+  else if(option == "Research")       execute_research(team);
+  else if(option == "Workshop")       execute_workshop(team);
+  else                                execute_publish(team);
+  
+}
+
+function execute_workshop(team) {
+  print("executing Workshop","OK");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var team_range = getTeamRange(team);
+  var project = ss.getSheets()[1].getRange("E12").getValue();
+  var Resource_1_points = team_range.offset(0,2,1,1).getValue();
+  var Project_1_level = team_range.offset(0,10,1,1).getValue();
+  var Project_2_level = team_range.offset(0,11,1,1).getValue();
+  var Project_3_level = team_range.offset(0,12,1,1).getValue();
+  var Project_4_level = team_range.offset(0,13,1,1).getValue();
+  var number_of_teams = ss.getSheets()[2].getRange("B1").getValue();
+  
+  print("Resource_1 points: "+Resource_1_points,"Warning");
+  if(Resource_1_points >= 10){
+    if(project == "Project_1" && Project_1_level > 1) {
+      print("Executing Project_1 Workshop","Warning");
+      print("number of sc_2 scientists:"+team_range.offset(0,6,1,1).getValue(),"Warning");
+      if(team_range.offset(0,6,1,1).getValue()>9) {
+        print("Executing Project_1 Workshop","Warning");
+        team_range.offset(0,2,1,1).setValue(team_range.offset(0,2,1,1).getValue()-10);
+        var range_Project_1 = ss.getSheets()[0].getRange("L5:L9"); 
+        for(var i=0;i<number_of_teams;++i) {
+          print("Team "+i+", sc_2 scientists: "+range_Project_1.offset(i,-4,1,1).getValue(),"Warning");
+          if(range_Project_1.offset(i,-4,1,1).getValue()>9){
+            if(range_Project_1.offset(i,0,1,1).getValue()>0) {
+              range_Project_1.offset(i,0,1,1).setValue(range_Project_1.offset(i,0,1,1).getValue()-1);
+            }
+          }
+        }
+        team_range.offset(0,10,1,1).setValue(team_range.offset(0,10,1,1).getValue()+1);
+        print("Workshop executed","Ok");
+      } else print("Not Enough sc_2 scientists","Error");
+      
+    } else if(project == "Project_2" && Project_2_level > 1) {
+      print("Executing Project_2 Workshop","Warning");
+      print("number of sc_3 scientists:"+team_range.offset(0,7,1,1).getValue(),"Warning");
+      if(team_range.offset(0,7,1,1).getValue()>9) {
+        team_range.offset(0,2,1,1).setValue(team_range.offset(0,2,1,1).getValue()-10);
+        var rangee = ss.getSheets()[0].getRange("M5:M9"); 
+        for(var i=0;i<number_of_teams;++i) {
+          print("Team "+i+", sc_3 scientists: "+rangee.offset(i,-4,1,1).getValue(),"Warning");
+          if(rangee.offset(i,-4,1,1).getValue()>9){
+            if(rangee.offset(i,0,1,1).getValue()>0) {
+              rangee.offset(i,0,1,1).setValue(rangee.offset(i,0,1,1).getValue()-1);
+            }
+          }
+        }
+        team_range.offset(0,11,1,1).setValue(team_range.offset(0,11,1,1).getValue()+1);
+        print("Workshop executed","Ok");
+      } else print("Not Enough sc_3 scientists","Error"); 
+      
+    } else if(project == "Project_3" && Project_3_level > 1) {
+      print("Executing Project_3 Workshop","Warning");
+        print("number of sc_4 scientists:"+team_range.offset(0,8,1,1).getValue(),"Warning");
+      if(team_range.offset(0,8,1,1).getValue()>9) {
+        team_range.offset(0,2,1,1).setValue(team_range.offset(0,2,1,1).getValue()-10);
+        var rangee = ss.getSheets()[0].getRange("N5:N9"); 
+        for(var i=0;i<number_of_teams;++i) {
+          print("Team "+i+", sc_4 scientists: "+rangee.offset(i,-4,1,1).getValue(),"Warning");
+          if(rangee.offset(i,-4,1,1).getValue()>9){
+            if(rangee.offset(i,0,1,1).getValue()>0) {
+              rangee.offset(i,0,1,1).setValue(rangee.offset(i,0,1,1).getValue()-1);
+            }
+          }
+        }
+        team_range.offset(0,12,1,1).setValue(team_range.offset(0,12,1,1).getValue()+1);
+        print("Workshop executed","Ok");
+      } else print("Not Enough sc_3 scientists","Error"); 
+            
+    } else if(project == "Project_4" && Project_4_level > 1) {
+       print("Project_4"+Project_4_level,"Warning");
+      print("Executing Project_4 Workshop","Warning");
+      print("number of sc_5 scientists:"+team_range.offset(0,9,1,1).getValue(),"Warning");
+      if(team_range.offset(0,9,1,1).getValue()>9) {
+        team_range.offset(0,2,1,1).setValue(team_range.offset(0,2,1,1).getValue()-10);
+        var rangee = ss.getSheets()[0].getRange("O5:O9"); 
+        for(var i=0;i<number_of_teams;++i) {
+          print("Team "+i+", sc_5 scientists: "+rangee.offset(i,-4,1,1).getValue(),"Warning");
+          if(rangee.offset(i,-4,1,1).getValue()>9){
+            if(rangee.offset(i,0,1,1).getValue()>0) {
+              rangee.offset(i,0,1,1).setValue(rangee.offset(i,0,1,1).getValue()-1);
+            }
+          }
+        }
+        team_range.offset(0,13,1,1).setValue(team_range.offset(0,13,1,1).getValue()+1);
+        print("Workshop executed","Ok");
+      } else print("Not Enough sc_5 scientists","Error"); 
+                  
+    } else print("Not enought level","Error")
+  } else print("Not enought Resource_1 points","Error");
+}
+
+//Execute the action redistribute
+function execute_assign(team){
+  print("executing assign","OK");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  var team_range = getTeamRange(team);
+  var researchers_origin = ss.getSheets()[1].getRange("H11").getValue();
+  var researchers_destination = ss.getSheets()[1].getRange("J11").getValue();
+  var quantity = ss.getSheets()[1].getRange("F11").getValue();
+  
+  //We get the team researchers, 5th colum is sc_1, 6th is sc_2 and so on...
+  var team_researchers = 0;
+  if(researchers_origin == "sc_1")    team_researchers = team_range.offset(0,5,1,1).getValue();
+  else if(researchers_origin == "sc_2") team_researchers = team_range.offset(0,6,1,1).getValue();
+  else if(researchers_origin == "sc_3")  team_researchers = team_range.offset(0,7,1,1).getValue();
+  else if(researchers_origin == "sc_4")  team_researchers = team_range.offset(0,8,1,1).getValue();
+  else                                 team_researchers = team_range.offset(0,9,1,1).getValue();
+  
+  ss.getActiveRange()
+  if(quantity > 0){
+  print ("moving "+researchers_origin+" to "+researchers_destination,"OK");
+  //If not enought scientists
+  if((team_researchers - quantity) < 0 ) print("Error: Not enought Scientists","Error");
+  else {  
+    //Lets define cases
+    
+    if(researchers_origin == "sc_1") {
+      if(researchers_destination == "sc_1"){
+        print("Error: Cannot move from sc_1 to sc_1","Error")
+      } else if(researchers_destination == "sc_2") {
+        team_range.offset(0,6,1,1).setValue(team_range.offset(0,6,1,1).getValue()+quantity);
+        team_range.offset(0,5,1,1).setValue(team_range.offset(0,5,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_3") {
+        team_range.offset(0,7,1,1).setValue(team_range.offset(0,7,1,1).getValue()+quantity);
+        team_range.offset(0,5,1,1).setValue(team_range.offset(0,5,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_4") {
+        team_range.offset(0,8,1,1).setValue(team_range.offset(0,8,1,1).getValue()+quantity);
+        team_range.offset(0,5,1,1).setValue(team_range.offset(0,5,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_5") {
+        team_range.offset(0,9,1,1).setValue(team_range.offset(0,9,1,1).getValue()+quantity);
+        team_range.offset(0,5,1,1).setValue(team_range.offset(0,5,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+      }
+    }   
+    if(researchers_origin == "sc_2") {
+      if(researchers_destination == "sc_2"){
+        print("Error: Cannot move from sc_2 to sc_2","Error")
+      } else if(researchers_destination == "sc_1") {
+        team_range.offset(0,5,1,1).setValue(team_range.offset(0,5,1,1).getValue()+quantity);
+        team_range.offset(0,6,1,1).setValue(team_range.offset(0,6,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_3") {
+        team_range.offset(0,7,1,1).setValue(team_range.offset(0,7,1,1).getValue()+quantity);
+        team_range.offset(0,6,1,1).setValue(team_range.offset(0,6,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_4") {
+        team_range.offset(0,8,1,1).setValue(team_range.offset(0,8,1,1).getValue()+quantity);
+        team_range.offset(0,6,1,1).setValue(team_range.offset(0,6,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_5") {
+        team_range.offset(0,9,1,1).setValue(team_range.offset(0,9,1,1).getValue()+quantity);
+        team_range.offset(0,6,1,1).setValue(team_range.offset(0,6,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+      }
+    }    
+    if(researchers_origin == "sc_3") {
+      if(researchers_destination == "sc_3"){
+        print("Error: Cannot move from sc_3 to sc_3","Error")
+      } else if(researchers_destination == "sc_1") {
+        team_range.offset(0,5,1,1).setValue(team_range.offset(0,5,1,1).getValue()+quantity);
+        team_range.offset(0,7,1,1).setValue(team_range.offset(0,7,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_2") {
+        team_range.offset(0,6,1,1).setValue(team_range.offset(0,6,1,1).getValue()+quantity);
+        team_range.offset(0,7,1,1).setValue(team_range.offset(0,7,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_4") {
+        team_range.offset(0,8,1,1).setValue(team_range.offset(0,8,1,1).getValue()+quantity);
+        team_range.offset(0,7,1,1).setValue(team_range.offset(0,7,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_5") {
+        team_range.offset(0,9,1,1).setValue(team_range.offset(0,9,1,1).getValue()+quantity);
+        team_range.offset(0,7,1,1).setValue(team_range.offset(0,7,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+      }
+    }
+    if(researchers_origin == "sc_4") {
+      if(researchers_destination == "sc_4"){
+        print("Error: Cannot move from sc_4 to sc_4","Error")
+      } else if(researchers_destination == "sc_1") {
+        team_range.offset(0,5,1,1).setValue(team_range.offset(0,5,1,1).getValue()+quantity);
+        team_range.offset(0,8,1,1).setValue(team_range.offset(0,8,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_2") {
+        team_range.offset(0,6,1,1).setValue(team_range.offset(0,6,1,1).getValue()+quantity);
+        team_range.offset(0,8,1,1).setValue(team_range.offset(0,8,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_3") {
+        team_range.offset(0,7,1,1).setValue(team_range.offset(0,7,1,1).getValue()+quantity);
+        team_range.offset(0,8,1,1).setValue(team_range.offset(0,8,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_5") {
+        team_range.offset(0,9,1,1).setValue(team_range.offset(0,9,1,1).getValue()+quantity);
+        team_range.offset(0,8,1,1).setValue(team_range.offset(0,8,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+      }
+    }
+    if(researchers_origin == "sc_5") {
+      if(researchers_destination == "sc_5"){
+        print("Error: Cannot move from sc_5 to sc_5","Error")
+      } else if(researchers_destination == "sc_1") {
+        team_range.offset(0,5,1,1).setValue(team_range.offset(0,5,1,1).getValue()+quantity);
+        team_range.offset(0,9,1,1).setValue(team_range.offset(0,9,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_2") {
+        team_range.offset(0,6,1,1).setValue(team_range.offset(0,6,1,1).getValue()+quantity);
+        team_range.offset(0,9,1,1).setValue(team_range.offset(0,9,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_3") {
+        team_range.offset(0,7,1,1).setValue(team_range.offset(0,7,1,1).getValue()+quantity);
+        team_range.offset(0,9,1,1).setValue(team_range.offset(0,9,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+     } else if(researchers_destination == "sc_5") {
+        team_range.offset(0,8,1,1).setValue(team_range.offset(0,8,1,1).getValue()+quantity);
+        team_range.offset(0,9,1,1).setValue(team_range.offset(0,9,1,1).getValue()-quantity);
+        print("OK:"+quantity+" scientists moved from "+researchers_origin+" to "+researchers_destination,"OK");   
+      }
+    }
+    
+  }
+  }
+  else print("Invalid value","Error")
+}
+
+function execute_redistribute(team){
+  print("executing redistribute","Warning");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  var team_range = getTeamRange(team);
+  var resource_origin = ss.getSheets()[1].getRange("H8").getValue();
+  var resource_destination = ss.getSheets()[1].getRange("J8").getValue();
+  var quantity = ss.getSheets()[1].getRange("F8").getValue();
+  
+  
+  var resource_points = 0;
+  if(resource_origin == "Resource_1") resource_points = team_range.offset(0,2,1,1).getValue();
+  else if(resource_origin == "Resource_2") resource_points = team_range.offset(0,3,1,1).getValue();
+  else                                    resource_points = team_range.offset(0,4,1,1).getValue();
+  
+  ss.getActiveRange()
+  if(quantity > 0){
+  print ("moving "+resource_origin+" to "+resource_destination,"OK");
+  if((resource_points - quantity) < 0 ) print("Error: Not enought Resource Points","Error");
+  else {  
+    //Lets define cases
+    
+    if(resource_origin == "Resource_1") {
+      if(resource_destination == "Resource_1"){
+        print("Error: Cannot move from Resource_1 to Resource_1","Error")
+      } else if(resource_destination == "Resource_2") {
+        team_range.offset(0,3,1,1).setValue(team_range.offset(0,3,1,1).getValue()+quantity);
+        team_range.offset(0,2,1,1).setValue(team_range.offset(0,2,1,1).getValue()-quantity);
+        print("OK:"+quantity+" resources moved from "+resource_origin+" to "+resource_destination,"OK");   
+     } else if(resource_destination == "Resource_3") {
+        team_range.offset(0,4,1,1).setValue(team_range.offset(0,2,1,1).getValue()+quantity);
+        team_range.offset(0,2,1,1).setValue(team_range.offset(0,4,1,1).getValue()-quantity);
+        print("OK:"+quantity+" resources moved from "+resource_origin+" to "+resource_destination,"OK");   
+     } 
+    } else if(resource_origin == "Resource_2") {
+      if(resource_destination == "Resource_2"){
+        print("Error: Cannot move from Resource_2 to Resource_2","Error")
+      } else if(resource_destination == "Resource_1") {
+        team_range.offset(0,2,1,1).setValue(team_range.offset(0,2,1,1).getValue()+quantity);
+        team_range.offset(0,3,1,1).setValue(team_range.offset(0,3,1,1).getValue()-quantity);
+        print("OK:"+quantity+" resources moved from "+resource_origin+" to "+resource_destination,"OK");   
+     } else if(resource_destination == "Resource_3") {
+        team_range.offset(0,4,1,1).setValue(team_range.offset(0,4,1,1).getValue()+quantity);
+        team_range.offset(0,3,1,1).setValue(team_range.offset(0,3,1,1).getValue()-quantity);
+        print("OK:"+quantity+" resources moved from "+resource_origin+" to "+resource_destination,"OK");   
+     } 
+    }  else if(resource_origin == "Resource_3") {
+      if(resource_destination == "Resource_3"){
+        print("Error: Cannot move from Resource_3 to Resource_3","Error")
+      } else if(resource_destination == "Resource_1") {
+        team_range.offset(0,2,1,1).setValue(team_range.offset(0,2,1,1).getValue()+quantity);
+        team_range.offset(0,4,1,1).setValue(team_range.offset(0,4,1,1).getValue()-quantity);
+        print("OK:"+quantity+" resources moved from "+resource_origin+" to "+resource_destination,"OK");   
+     } else if(resource_destination == "Resource_2") {
+        team_range.offset(0,3,1,1).setValue(team_range.offset(0,3,1,1).getValue()+quantity);
+        team_range.offset(0,4,1,1).setValue(team_range.offset(0,4,1,1).getValue()-quantity);
+        print("OK:"+quantity+" resources moved from "+resource_origin+" to "+resource_destination,"OK");   
+     } 
+    }
+    
+  }
+  }
+  else print("Invalid value","Error")
+}
+
+function execute_hire(team){
+  print("executing Hire","Warning");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();  
+  var team_range = getTeamRange(team);
+  var hiring_target = ss.getSheets()[1].getRange("E6").getValue();
+  var Resource_1_points = team_range.offset(0,2,1,1).getValue();
+  var scientists = team_range.offset(0,1,1,1).getValue();
+  if((Resource_1_points - scientists) >= 0){
+    team_range.offset(0,2,1,1).setValue(Resource_1_points-scientists);
+    if(hiring_target == "sc_1"){
+      team_range.offset(0,5,1,1).setValue(team_range.offset(0,5,1,1).getValue()+10);
+      print("10 scientists added to sc_1","OK");
+    } else if(hiring_target == "sc_2"){
+      team_range.offset(0,6,1,1).setValue(team_range.offset(0,6,1,1).getValue()+10);
+      print("10 scientists added to sc_2","OK");
+    } else if(hiring_target == "sc_3"){
+      team_range.offset(0,7,1,1).setValue(team_range.offset(0,7,1,1).getValue()+10);
+      print("10 scientists added to sc_3","OK");
+    } else if(hiring_target == "sc_4"){
+      team_range.offset(0,8,1,1).setValue(team_range.offset(0,8,1,1).getValue()+10);
+      print("10 scientists added to sc_4","OK");
+    } else { //sc_5
+      team_range.offset(0,9,1,1).setValue(team_range.offset(0,9,1,1).getValue()+10);
+      print("10 scientists added to sc_5","OK");
+    } 
+  }else print("Not enough Resource_1 Points","Error");
+  
+}
+function execute_lead_project(team){
+  print("executing Lead a Project","Warning");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();  
+  var team_range = getTeamRange(team);
+  var sc_3_scientifics = team_range.offset(0,7,1,1).getValue();
+  var sc_4_scientifics = team_range.offset(0,8,1,1).getValue();
+  var sc_5_scientifics = team_range.offset(0,9,1,1).getValue();
+  team_range.offset(0,2,1,1).setValue(team_range.offset(0,5,1,1).getValue()+team_range.offset(0,2,1,1).getValue());
+  team_range.offset(0,3,1,1).setValue(team_range.offset(0,6,1,1).getValue()+team_range.offset(0,3,1,1).getValue());
+  team_range.offset(0,4,1,1).setValue(sc_3_scientifics+sc_4_scientifics+sc_5_scientifics+team_range.offset(0,4,1,1).getValue());
+  print("Resources increased","OK");
+}
+
+function execute_publish(team){
+  print("executing Publish","Warning");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();  
+  var team_range = getTeamRange(team);
+  var articles = team_range.offset(0,14,1,1).getValue();
+  var Resource_3_points = team_range.offset(0,4,1,1).getValue();
+  if(research_points-20 >= 0){
+    team_range.offset(0,4,1,1).setValue(Resource_3_points-20);
+    team_range.offset(0,14,1,1).setValue(articles+10);
+    print("10 Articles Published!","OK");
+  } else print("Not enough Research Points","Error");
+}
+
+function execute_research(team){
+  print("executing research","Warning");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  
+  var team_range = getTeamRange(team);
+  var research_target = ss.getSheets()[1].getRange("E9").getValue();
+  
+  if(research_target == "Project_1"){
+    var Resource_2_resources = team_range.offset(0,3,1,1).getValue();
+    var Project_1_level = team_range.offset(0,10,1,1).getValue();
+    var sc_2_scientifics = team_range.offset(0,6,1,1).getValue();
+    
+    print("Resource_2 points: "+Resource_2_resources+", Project_1 level: "+Project_1_level+", sc_2 scien "+sc_2_scientifics,"Warning");
+    if(sc_2_scientifics >= 10){      
+      if((Resource_2_resources-10*Project_1_level)>=0){
+        if(Project_1_level<5){
+          team_range.offset(0,10,1,1).setValue(team_range.offset(0,10,1,1).getValue()+1);
+          team_range.offset(0,3,1,1).setValue(team_range.offset(0,3,1,1).getValue()-10*team_range.offset(0,10,1,1).getValue());
+          print("Project_1 upgraded at "+team_range.offset(0,10,1,1).getValue(),"OK");
+        } else print("Already in level 5","Error");
+      } else print("Not enough Resource_2 poits","Error");
+    } else print("Not enough sc_2 scientists","Error");
+    
+  } else if(research_target == "Project_3"){
+    var Resource_3_resources = team_range.offset(0,4,1,1).getValue();
+    var Project_3_level = team_range.offset(0,12,1,1).getValue();
+    var sc_4_scientifics = team_range.offset(0,8,1,1).getValue();
+    
+    print("Research points: "+Resource_3_resources+", Project_3 level: "+Project_3_level+", sc_4 scien "+sc_4_scientifics,"Warning");
+    if(sc_4_scientifics >= 10){      
+      if((Resource_3_resources-10*Project_3_level)>=0){
+        if(Project_3_level<5){
+          team_range.offset(0,12,1,1).setValue(team_range.offset(0,12,1,1).getValue()+1);
+          team_range.offset(0,4,1,1).setValue(team_range.offset(0,4,1,1).getValue()-10*team_range.offset(0,12,1,1).getValue());
+          print("Project_3 upgraded at "+team_range.offset(0,12,1,1).getValue(),"OK");
+        } else print("Already in level 5","Error");
+      } else print("Not enough Resource_3 Points","Error");
+    } else print("Not enough sc_4 scientists","Error");
+    
+  } else if(research_target == "Project_2"){
+    var Resource_3_resources = team_range.offset(0,4,1,1).getValue();
+    var Project_2_level = team_range.offset(0,11,1,1).getValue();
+    var sc_3_scientifics = team_range.offset(0,7,1,1).getValue();
+    
+    print("Resource_3 points: "+Resource_3_resources+", Project_2 level: "+Project_2_level+", sc_3 scien "+sc_3_scientifics,"Warning");
+    if(sc_3_scientifics >= 10){      
+      if((Resource_3_resources-10*Project_2_level)>=0){
+        if(Project_2_level<5){
+          team_range.offset(0,11,1,1).setValue(team_range.offset(0,11,1,1).getValue()+1);
+          team_range.offset(0,4,1,1).setValue(team_range.offset(0,4,1,1).getValue()-10*team_range.offset(0,11,1,1).getValue());
+          print("Project_2 upgraded at "+team_range.offset(0,11,1,1).getValue(),"OK");
+        } else print("Already in level 5","Error");
+      } else print("Not enough Resource_3 Points","Error");
+    } else print("Not enough sc_3 scientists","Error");
+    
+  } else { 
+    var Resource_3_resources = team_range.offset(0,4,1,1).getValue();
+    var Project_4_level = team_range.offset(0,13,1,1).getValue();
+    var sc_5_scientifics = team_range.offset(0,9,1,1).getValue();
+    
+    print("Research points: "+Resource_3_resources+", Project_4 level: "+Project_4_level+", sc_3 scien "+sc_5_scientifics,"Warning");
+    if(sc_5_scientifics >= 10){      
+      if((Resource_3_resources-10*Project_4_level)>=0){
+        if(Project_4_level<5){
+          team_range.offset(0,13,1,1).setValue(team_range.offset(0,13,1,1).getValue()+1);
+          team_range.offset(0,4,1,1).setValue(team_range.offset(0,4,1,1).getValue()-10*team_range.offset(0,13,1,1).getValue());
+          print("Project_4 upgraded at "+team_range.offset(0,11,1,1).getValue(),"OK");
+        } else print("Already in level 5","Error");
+      } else print("Not enough Resource_3 Points","Error");
+    } else print("Not enough sc_5 scientists","Error");    
+  }
+}
+
+function execute_event(){
+  print("Executing event","OK");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();  
+  var option = ss.getSheets()[1].getRange("B16").getValue();
+  
+  print_event(option);
+}
+
+function print_event(message){
+  Logger.log(message);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var output = ss.getSheets()[0].getRange("C18");
+  output.setBackground("black");
+  output.setFontColor("yellow");
+  output.setFontSize(21);
+  output.setHorizontalAlignment("center");
+  output.setVerticalAlignment("middle");
+  output.setValue(message);
+}
+function clear_event(){
+  print_event("");
+  print("Cleaning event panel","OK");
+}
+
+//Print the message to the Result Cell aka console output and log it
+function print(log_message,level){
+  Logger.log(log_message);
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var output = ss.getSheets()[1].getRange("B27");
+  output.setFontColor("black");
+  output.setFontSize(16);
+  output.setHorizontalAlignment("center");
+  output.setVerticalAlignment("middle");
+  output.setValue(log_message);
+  if(level == "Error") {
+    output.setBackground("red");
+  } else if(level == "Warning") {
+    output.setBackground("yellow");
+  }else {
+    output.setBackground("green");
+  }
+}
+
+//Return the team range
+function getTeamRange(team){
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var n_teams = ss.getSheets()[2].getRange(1,2).getValue()
+  var i = 0;
+  while(i<n_teams){
+    if(ss.getSheets()[2].getRange(10+i,1).getValue() == team) return ss.getSheets()[0].getRange(5+i, 2, 1, 16);
+    ++i;
+  }
+  print("Team not found","Error");
+}
