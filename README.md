@@ -6,7 +6,7 @@ A generic Department Simulator in Google Sheets
 
 Department Simulator is a turn-based game written in Google Sheets App Script where the goal is run a bussiness department taking strategic desicions like hiring people, lead projects, redistribute resources...
 
-There's 3 resources and 4 projects to level up. Each project level gives a new ability. Each must have a sheet with all the levels and actions explained
+There's 3 resources and 4 projects to level up. Each project level gives a new ability. To play, each team must have a sheet with all the levels and actions explained
 
 
 ## How to play
